@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw # Importing Image to read and save the image. I
 while(1): # Starting while loop to keep the programme going if there is an error in the inputted text.
     TargetText = input("\nPROGRAMME:\n    Input a text string to be encoded.\nUSER:\n    ") # Asking for an input from the user.
     if len(TargetText) > 41665: # Checking if the user exceeded the character limit.
-        TargetText = input("\nPROGRAMME:\n    Text string too long.\nText string cannot exceed 41,665 characters.\nUSER INPUT:\n    ") # Informing the user that they have exceeded the character limit.
+        TargetText = input("\nPROGRAMME:\n    Text string too long.\nText string cannot exceed 41,665 characters.\nUSER:\n    ") # Informing the user that they have exceeded the character limit.
     else: # If the user hasn't exceeded the character limit.
         break # Breaking out of the while loop
 
@@ -23,7 +23,7 @@ PixelSpacing = [] # Creating an empty list to hold the spacing between the pixel
 ImageSize = 500 # Setting the base image size.
 Count = 0 # Creating a variable to be used to keep count of different indexes.
 YCoordinate = 0 # Creating a variable to keep count of the Y axis.
-OutImage = Image.new("RGBA", (ImageSize, ImageSize), (0, 0, 0)) # Creating the image to put the encoded imformation on.
+OutImage = Image.new("RGB", (ImageSize, ImageSize), (0, 0, 0)) # Creating the image to put the encoded imformation on.
 ImageDraw = ImageDraw.ImageDraw(OutImage) # Assigning the ImageDraw function to a shorter version to make coding easier.
 
 for A in range(len(TargetText)): # Starting the loop to assign the coordinates, colours and spacing to the pixels that hold the inputted text.
@@ -53,7 +53,7 @@ for A in range(len(TargetText)): # Starting the loop to assign the coordinates, 
 
 for X in range(ImageSize): # Starting the loop to keep track of the X axis.
     for Y in range(ImageSize): # Starting the loop to keep track of the Y axis.
-        ImageDraw.point((X, Y), (randint(a=0, b=255), randint(a=0, b=255), randint(a=0, b=255))) # Plotting the pixels that fill in the gaps of the image.
+        ImageDraw.point((X, Y), (randint(a=1, b=255), randint(a=1, b=255), randint(a=1, b=255))) # Plotting the pixels that fill in the gaps of the image.
 
 for A in range(len(PixelCoordinates)): # Starting the loop that plots the pixels that contain the inputed text string's characters.
     ImageDraw.point(PixelCoordinates[A], Colours[A]) # plotting the pixels that contain the inputted text string's characters.
@@ -65,7 +65,7 @@ for A in range(len(PixelSpacing)): # Starting the loop that plots the points for
     if (ImageSize - 1) - Count < 0: # Checking that the coordinate is still on the image.
         YCoordinate -= 1 # Moving down the Y axis.
         Count = 0 # Resetting Count.
-    ImageDraw.point(((ImageSize - 1) - Count, YCoordinate), (PixelSpacing[A] * 51, randint(a=0, b=255), randint(a=0, b=255))) # Plotting the point for the decoder to use to decode the image.
+    ImageDraw.point(((ImageSize - 1) - Count, YCoordinate), (PixelSpacing[A] * 51, 0, randint(a=0, b=255))) # Plotting the point for the decoder to use to decode the image.
     Count += 1 # Increasing Count by 1 to move to the next coordinate.
 
 print("\nPROGRAMME:\n    Encryption complete.") # Confirming that the encryption has completed.

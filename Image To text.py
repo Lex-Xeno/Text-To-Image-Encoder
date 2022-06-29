@@ -1,6 +1,6 @@
 from PIL import Image # Importing Image to read and save the image.
 
-TargetImage = Image.open(input("\nPROGRAMME:\n    Enter encrypted image file path (including the file extension).\nUSER INPUT:\n    ")) # Asking where the image you want to decrypt is.
+TargetImage = Image.open(input("\nPROGRAMME:\n    Enter encrypted image file path (including the file extension).\nUSER:\n    ")) # Asking where the image you want to decrypt is.
 UpperCaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] # Creating a list of uppercase letters. This list corresponds to the UpperCaseColours list.
 UpperCaseNumbers = [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99, 108, 117, 126, 135, 144, 153, 162, 171, 180, 189, 198, 207, 216, 225, 234] # Creating a list of colour values for the red RGB band for the program to check through. This list is used to get the correct index for the UpperCaseLetters list.
 LowerCaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] # Creating a list of lowercase letters. This list corresponds to the LowerCaseColours list.
@@ -15,15 +15,15 @@ OutText = "" # Creating an empty string to hold the decrypted text.
 print("\nPROGRAMME:\n    Descripting...\n    This may take a while...") # Informing the user that the decrypting process is in motion.
 
 while(1): # Starting the loop that finds the spacing between the pixels that hold the encrypted text string.
-    if TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 51: # Checking if the pixel corresponds to the value 1.
+    if TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 51 and TargetImage.getdata(band=1)[((ImageSize ** 2) - 1) - Count] == 0: # Checking if the pixel corresponds to the value 1.
         PixelSpacing.append(1) # Appending the value 1.
-    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 102: # Checking if the pixel corresponds to the value 2.
+    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 102 and TargetImage.getdata(band=1)[((ImageSize ** 2) - 1) - Count] == 0: # Checking if the pixel corresponds to the value 2.
         PixelSpacing.append(2) # Appending the value 2.
-    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 153: # Checking if the pixel corresponds to the value 3.
+    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 153 and TargetImage.getdata(band=1)[((ImageSize ** 2) - 1) - Count] == 0: # Checking if the pixel corresponds to the value 3.
         PixelSpacing.append(3) # Appending the value 3.
-    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 204: # Checking if the pixel corresponds to the value 4.
+    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 204 and TargetImage.getdata(band=1)[((ImageSize ** 2) - 1) - Count] == 0: # Checking if the pixel corresponds to the value 4.
         PixelSpacing.append(4) # Appending the value 4.
-    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 255: # Checking if the pixel corresponds to the value 5.
+    elif TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 255 and TargetImage.getdata(band=1)[((ImageSize ** 2) - 1) - Count] == 0: # Checking if the pixel corresponds to the value 5.
         PixelSpacing.append(5) # Appending the value 5.
     else: # If there isn't a pixel that corresponds to the values 1, 2, 3, 4, or 5.
         break # The program breaks out of the while loop.
