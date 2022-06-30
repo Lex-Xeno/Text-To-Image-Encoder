@@ -12,7 +12,7 @@ ImageSize = 500 # Setting the base image size.
 Count = 0 # Creating a variable to be used to keep count of different indexes.
 OutText = "" # Creating an empty string to hold the decrypted text.
 
-print("\nPROGRAMME:\n    Descripting...\n    This may take a while...") # Informing the user that the decrypting process is in motion.
+print("\nPROGRAMME:\n    Decrypting...\n    This may take a while...") # Informing the user that the decrypting process is in motion.
 
 while(1): # Starting the loop that finds the spacing between the pixels that hold the encrypted text string.
     if TargetImage.getdata(band=0)[((ImageSize ** 2) - 1) - Count] == 51 and TargetImage.getdata(band=1)[((ImageSize ** 2) - 1) - Count] == 0: # Checking if the pixel corresponds to the value 1.

@@ -69,5 +69,5 @@ for A in range(len(PixelSpacing)): # Starting the loop that plots the points for
     Count += 1 # Increasing Count by 1 to move to the next coordinate.
 
 print("\nPROGRAMME:\n    Encryption complete.") # Confirming that the encryption has completed.
-OutImage.save(input("\nPROGRAMME:\n    Enter save file path and name (without the file extension) in the format:\n    Drive\Directory\Save File Name\n\n    E.G.\n    E:\Text To Image Encoder\EncodedImage\nUSER:\n    ") + ".bmp") # Asking where to save the image and it's file name.
+OutImage.save(input("\nPROGRAMME:\n    Enter save file name (without the file extension)\nUSER:\n    ") + ".bmp") # Asking where to save the image and it's file name.
 print("\nPROGRAMME:\n    Image saved successfully.") # Confirming that the image was saved.
