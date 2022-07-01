@@ -6,22 +6,28 @@ while(1): # Starting while loop to keep the programme going if there is an error
     if len(TargetText) > 41665: # Checking if the user exceeded the character limit.
         TargetText = input("\nPROGRAMME:\n    Text string too long.\nText string cannot exceed 41,665 characters.\nUSER:\n    ") # Informing the user that they have exceeded the character limit.
     else: # If the user hasn't exceeded the character limit.
-        break # Breaking out of the while loop
+        break # Breaking out of the while loop.
 
-UpperCaseColours = [(9), (18), (27), (36), (45), (54), (63), (72), (81), (90), (99), (108), (117), (126), (135), (144), (153), (162), (171), (180), (189), (198), (207), (216), (225), (234)] # Creating a list of colour values for the red RGB band. This list corresponds to the UpperCaseLetters list.
-UpperCaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] # Creating a list of uppercase letters for the programme to check through. This list is used to get the correct index for the UpperCaseColours list.
-
-LowerCaseColours = [(9), (18), (27), (36), (45), (54), (63), (72), (81), (90), (99), (108), (117), (126), (135), (144), (153), (162), (171), (180), (189), (198), (207), (216), (225), (234)] # Creating a list of colour values for the green RGB band. This list corresponds to the LowerCaseLetters list.
-LowerCaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] # Creating a list of lowercase letters for the programme to check through. This list is used to get the correct index for the LowerCaseColours list.
-
-SymbolColours = [(6), (12), (18), (24), (30), (36), (42), (48), (54), (60), (66), (72), (78), (84), (90), (96), (102), (108), (114), (120), (126), (132), (138), (144), (150), (156), (162), (168), (174), (180), (186), (192), (198), (204), (210), (216), (222), (228), (234), (240), (246), (252)] # Creating a list of colour values for the blue RGB band. This list corresponds to the Symbols list.
+Count = 0 # Creating a variable to be used to keep count of different indexes.
+LetterColours = [] # Creating an empty list to hold the colour values for the red (if the specified letter is an uppercase letter) and green (if the specified letter is a lowercase letter) RGB band. This list corresponds to the Letters list.
+SymbolColours = [] # Creating an empty list to hold the colour values for the blue RGB band. This list corresponds to the Symbols list.
+Letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] # Creating a list of lowercase letters for the programme to check through. This list is used to get the correct index for the LowerCaseColours list.
 Symbols = ["1", "!", "2", "\"", "3", "£", "4", "$", "5", "%", "6", "7", "&", "8", "*", "9", "(", "0", ")", "-", "_", "=", "+", "[", "{", "]", "}", ";", ":", "'", "@", "#", "~", "\\", "|", ",", "<", ".", ">", "/", "?", " "] # Creating a list of symbols for the programme to check through. This list is used to get the correct index for the SymbolColours list.
+
+for A in range(len(Letters)): # Starting the loop that calculates and appends the colour values for LetterColours.
+    Count += 1 # Increasing Count by 1 to move to the next index.
+    LetterColours.append(round((255 / len(Letters)) * Count)) # Apending the colour value to LetterColours.
+
+Count = 0 # Reseting Count.
+
+for A in range(len(Symbols)): # Starting the loop that calculates and appends the colour values for SymbolColours.
+    Count += 1 # Increasing Count by 1 to move to the next index.
+    SymbolColours.append(round((255 / len(Symbols)) * Count)) # Apending the colour value to SymbolColours.
 
 PixelCoordinates = [] # Creating an empty list to hold the coordinates for the pixels that hold the input text characters.
 Colours = [] # Creating an empty list to hold the colours for the input text characters.
 PixelSpacing = [] # Creating an empty list to hold the spacing between the pixels so that the decoder knows what pixels hold the input text characters.
 ImageSize = 500 # Setting the base image size.
-Count = 0 # Creating a variable to be used to keep count of different indexes.
 YCoordinate = 0 # Creating a variable to keep count of the Y axis.
 OutImage = Image.new("RGB", (ImageSize, ImageSize), (0, 0, 0)) # Creating the image to put the encoded imformation on.
 ImageDraw = ImageDraw.ImageDraw(OutImage) # Assigning the ImageDraw function to a shorter version to make coding easier.
@@ -36,20 +42,23 @@ for A in range(len(TargetText)): # Starting the loop to assign the coordinates, 
     else: # Continuing if the coordinate is on the image.
         Count += Rand # Adding Rand to Count to get the next coordinate.
 
-    for B in range(len(UpperCaseLetters)): # Cycling through the uppercase letters in the list UpperCaseLetters.
-        if TargetText[A] == UpperCaseLetters[B]: # Checking for what uppercase letter is in the inputted text string's A index.
-            PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
-            Colours.append((UpperCaseColours[B], 0, 0)) # Appending the correct colour to the Colour list.
+    if TargetText[A].islower == True: # Checking if the specified character is lowercase.
+        for B in range(len(Letters)): # Cycling through the lowercase letters in the list Letters.
+            if TargetText[A] == Letters[B]: # Checking for what lowercase letter is in the inputted text string's A index.
+                PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
+                Colours.append((LetterColours[B], 0, 0)) # Appending the correct colour to the Colour list.
 
-    for B in range(len(LowerCaseLetters)): # Cycling through the lowercase letters in the list LowerCaseLetters.
-        if TargetText[A] == LowerCaseLetters[B]: # Checking for what lowercase letter is in the inputted text string's A index.
-            PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
-            Colours.append((0, LowerCaseColours[B], 0)) # Appending the correct colour to the Colour list.
+    elif TargetText[A].isupper() == True: # Checking if the specified character is uppercase.
+        for B in range(len(Letters)): # Cycling through the uppercase letters in the list Letters.
+            if TargetText[A] == Letters[B].upper(): # Checking for what uppercase letter is in the inputted text string's A index.
+                PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
+                Colours.append((LetterColours[B], 0, 0)) # Appending the correct colour to the Colour list.
 
-    for B in range(len(SymbolColours)): # Cycling through the symbols in the list Symbols.
-        if TargetText[A] == Symbols[B]: # Checking for what symbol is in the inputted text string's A index.
-            PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
-            Colours.append((0, 0, SymbolColours[B])) # Appending the correct colour to the Colour list.
+    else:
+        for B in range(len(Symbols)): # Cycling through the symbols in the list Symbols.
+            if TargetText[A] == Symbols[B]: # Checking for what symbol is in the inputted text string's A index.
+                PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
+                Colours.append((0, 0, SymbolColours[B])) # Appending the correct colour to the Colour list.
 
 for X in range(ImageSize): # Starting the loop to keep track of the X axis.
     for Y in range(ImageSize): # Starting the loop to keep track of the Y axis.
