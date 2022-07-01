@@ -32,6 +32,7 @@ YCoordinate = 0 # Creating a variable to keep count of the Y axis.
 OutImage = Image.new("RGB", (ImageSize, ImageSize), (0, 0, 0)) # Creating the image to put the encoded imformation on.
 ImageDraw = ImageDraw.ImageDraw(OutImage) # Assigning the ImageDraw function to a shorter version to make coding easier.
 
+Count = 0
 for A in range(len(TargetText)): # Starting the loop to assign the coordinates, colours and spacing to the pixels that hold the inputted text.
     Rand = randint(a=1, b=5) # Generating a random integer and holding it to assign it to other variables.
     PixelSpacing.append(Rand) # Appending the previously generated random integer to PixelSpacing.
@@ -42,7 +43,7 @@ for A in range(len(TargetText)): # Starting the loop to assign the coordinates, 
     else: # Continuing if the coordinate is on the image.
         Count += Rand # Adding Rand to Count to get the next coordinate.
 
-    if TargetText[A].islower == True: # Checking if the specified character is lowercase.
+    if TargetText[A].islower() == True: # Checking if the specified character is lowercase.
         for B in range(len(Letters)): # Cycling through the lowercase letters in the list Letters.
             if TargetText[A] == Letters[B]: # Checking for what lowercase letter is in the inputted text string's A index.
                 PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
@@ -52,13 +53,16 @@ for A in range(len(TargetText)): # Starting the loop to assign the coordinates, 
         for B in range(len(Letters)): # Cycling through the uppercase letters in the list Letters.
             if TargetText[A] == Letters[B].upper(): # Checking for what uppercase letter is in the inputted text string's A index.
                 PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
-                Colours.append((LetterColours[B], 0, 0)) # Appending the correct colour to the Colour list.
+                Colours.append((0, LetterColours[B], 0)) # Appending the correct colour to the Colour list.
 
-    else:
+    elif TargetText[A].isupper() != True and TargetText[A] != True:
         for B in range(len(Symbols)): # Cycling through the symbols in the list Symbols.
             if TargetText[A] == Symbols[B]: # Checking for what symbol is in the inputted text string's A index.
                 PixelCoordinates.append((Count, YCoordinate)) # Appending the coordinate to the PixelCoordinates list.
                 Colours.append((0, 0, SymbolColours[B])) # Appending the correct colour to the Colour list.
+    else:
+        print("\nERROR:\n    There was an unknown character in the inputed text string\n    Check the file \"README.md\" or go to \"https://github.com/Lex-Xeno/Text-To-Image-Encoder/tree/main\" to see what character are valid")
+        break
 
 for X in range(ImageSize): # Starting the loop to keep track of the X axis.
     for Y in range(ImageSize): # Starting the loop to keep track of the Y axis.
@@ -74,9 +78,19 @@ for A in range(len(PixelSpacing)): # Starting the loop that plots the points for
     if (ImageSize - 1) - Count < 0: # Checking that the coordinate is still on the image.
         YCoordinate -= 1 # Moving down the Y axis.
         Count = 0 # Resetting Count.
-    ImageDraw.point(((ImageSize - 1) - Count, YCoordinate), (PixelSpacing[A] * 51, 0, randint(a=0, b=255))) # Plotting the point for the decoder to use to decode the image.
+    ImageDraw.point(((ImageSize - 1) - Count, YCoordinate), (PixelSpacing[A] * 51, 0, randint(a=1, b=255))) # Plotting the point for the decoder to use to decode the image.
     Count += 1 # Increasing Count by 1 to move to the next coordinate.
+
+if (ImageSize - 1) - Count < 0: # Checking that the coordinate is still on the image.
+    YCoordinate -= 1 # Moving down the Y axis.
+    Count = 0 # Resetting Count.
+    ImageDraw.point(((ImageSize - 1) - Count, YCoordinate), (0, 0, 0)) # Plotting the point for the decoder to use to decode the image.
+else:
+    ImageDraw.point(((ImageSize - 1) - Count, YCoordinate), (0, 0, 0)) # Plotting the point for the decoder to use to decode the image.
 
 print("\nPROGRAMME:\n    Encryption complete.") # Confirming that the encryption has completed.
 OutImage.save(input("\nPROGRAMME:\n    Enter save file path and name (without the file extension) in the format:\n    Drive\Directory\Save File Name\n\n    E.G.\n    E:\Text To Image Encoder\EncodedImage\nUSER:\n    ") + ".bmp") # Asking where to save the image and it's file name.
 print("\nPROGRAMME:\n    Image saved successfully.") # Confirming that the image was saved.
+
+# If you don't know what to put but want to test this programme use this:
+# Welcome to Blender! Blender is a free and open-source 3D creation suite. With Blender, you can create 3D visualizations such as still images, 3D animations and VFX shots. You can also edit videos. It is well suited to individuals and small studios who benefit from its unified pipeline and responsive development process. Being a cross-platform application, Blender runs on Linux, macOS, as well as Windows systems. It also has relatively small memory and drive requirements compared to other 3D creation suites. Its interface uses OpenGL to provide a consistent experience across all supported hardware and platforms.
